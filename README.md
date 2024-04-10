@@ -1,4 +1,4 @@
-# Brain Scan Classifier with EfficientNetB0 and Transfer Learning
+# Brain Scan Classifier
 
 This repository contains a brain scan classifier that utilizes transfer learning with EfficientNetB0 architecture to classify images into four categories: no tumor, meningioma, glioma, or pituitary. The classifier is designed to assist medical professionals in diagnosing brain scans efficiently and accurately.
 
