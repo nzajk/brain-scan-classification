@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from app import app
+from backend.app import app
 import numpy as np
 import cv2
 

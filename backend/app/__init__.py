@@ -11,11 +11,11 @@ def create_app():
     app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
     
     # load the model
-    model_path = 'backend/app/model/model.h5'
+    model_path = '/model/model.h5'
     app.config['MODEL'] = load_model(model_path)
 
     # register blueprints
-    from backend.app.api.routes import main
+    from backend.app.routes import main
     app.register_blueprint(main)
 
     return app
