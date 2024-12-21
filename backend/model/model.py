@@ -1,11 +1,7 @@
 # classification model for the backend api
 
-import tensorflow as tf, matplotlib.pyplot as plt, numpy as np, cv2, os, random
+import tensorflow as tf, numpy as np, cv2, os
 from sklearn.utils import shuffle
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-from tensorflow.keras.applications import EfficientNetB0
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Dropout
 
 train_dataset = 'dataset/training/' 
 test_dataset = 'dataset/testing/'
@@ -71,13 +67,13 @@ x_test, y_test = load_data(test_dataset)
 y_train = tf.keras.utils.to_categorical(y_train, num_classes=4)
 y_test = tf.keras.utils.to_categorical(y_test, num_classes=4)
 
-efficient_net = EfficientNetB0(weights='imagenet', include_top=False, input_shape=(image_size_x, image_size_y, 3))
+efficient_net = tf.keras.applications.EfficientNetB0(weights='imagenet', include_top=False, input_shape=(image_size_x, image_size_y, 3))
 
-model = Sequential([
+model = tf.keras.models.Sequential([
     efficient_net,
-    GlobalAveragePooling2D(),
-    Dropout(0.5),
-    Dense(4, activation='softmax') 
+    tf.keras.layers.GlobalAveragePooling2D(),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(4, activation='softmax') 
 ])
 
 model.compile(optimizer=tf.optimizers.legacy.Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])

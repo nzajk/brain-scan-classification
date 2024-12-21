@@ -1,5 +1,5 @@
 from flask import Flask
-from tensorflow.keras.models import load_model
+import tensorflow as tf
 
 def create_app():
     app = Flask(__name__)
@@ -11,7 +11,7 @@ def create_app():
     
     # load the model
     model_path = '/model/model.h5'
-    app.config['MODEL'] = load_model(model_path)
+    app.config['MODEL'] = tf.keras.models.load_model(model_path)
 
     # register blueprints
     from routes import main

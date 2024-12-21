@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
-from backend.app import app
 import numpy as np
 import cv2
+from flask import current_app
 
 # define a blueprint, a way to organize routes and views
 main = Blueprint('main', __name__)
@@ -25,8 +25,7 @@ def predict():
     img = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
     img = cv2.resize(img, (224, 224))
     
-    # assuming model is already loaded in app.config['MODEL']
-    model = app.config['MODEL']
+    model = current_app.config['MODEL']
     prediction = model.predict(np.expand_dims(img, axis=0))
     predicted_class = np.argmax(prediction, axis=1) # get the highest probability class
 
