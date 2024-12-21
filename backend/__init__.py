@@ -1,6 +1,5 @@
 from flask import Flask
 from tensorflow.keras.models import load_model
-import os
 
 def create_app():
     app = Flask(__name__)
@@ -15,7 +14,7 @@ def create_app():
     app.config['MODEL'] = load_model(model_path)
 
     # register blueprints
-    from backend.app.routes import main
+    from routes import main
     app.register_blueprint(main)
 
     return app

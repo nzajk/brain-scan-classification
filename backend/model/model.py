@@ -1,13 +1,11 @@
+# classification model for the backend api
+
 import tensorflow as tf, matplotlib.pyplot as plt, numpy as np, cv2, os, random
 from sklearn.utils import shuffle
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from tensorflow.keras.applications import EfficientNetB0
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Dropout
-
-"""
-classification model for the backend api
-"""
 
 train_dataset = 'dataset/training/' 
 test_dataset = 'dataset/testing/'
