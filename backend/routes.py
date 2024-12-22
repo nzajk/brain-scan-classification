@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 import numpy as np
 import cv2
-import os
 
 main = Blueprint('main', __name__)
 
@@ -34,9 +33,9 @@ def predict():
     # get predicted class
     predicted_class = np.argmax(prediction, axis=1)
 
-    classes = {0: 'Tumor free', 1: 'Meningioma tumor', 2: 'Glioma tumor', 3: 'Pituitary tumor'}
+    decode = {0: 'No tumor', 1: 'Meningioma tumor', 2: 'Glioma tumor', 3: 'Pituitary tumor'}
 
-    return jsonify({'prediction': str(classes[predicted_class[0]])})
+    return jsonify({'prediction': str(decode[predicted_class[0]])})
 
 # helper function to check allowed file extensions
 def allowed_file(filename):

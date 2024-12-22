@@ -14,7 +14,12 @@
         <!-- image upload form -->
         <form id="imageForm" enctype="multipart/form-data" class="mb-4">
             <label for="imageInput" class="block text-lg">Upload Image:</label>
-            <input type="file" id="imageInput" name="image" class="w-full mt-2 p-2 border border-gray-300 rounded-lg" required>
+            <input type="file" id="imageInput" name="image" class="w-full mt-2 p-2 border border-gray-300 rounded-lg" accept="image/*" required>
+            
+            <!-- image preview -->
+            <div id="imagePreview" class="mt-4 flex justify-center items-center">
+                <img id="previewImage" src="" alt="Image Preview" class="w-full h-auto rounded-lg max-w-xs max-h-96 hidden">
+            </div>
         </form>
 
         <!-- submit button -->

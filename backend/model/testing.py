@@ -1,11 +1,10 @@
-import tensorflow as tf, numpy as np, cv2, os
+import tensorflow as tf, numpy as np, cv2, os, random
 from sklearn.utils import shuffle
+import matplotlib.pyplot as plt
 
 image_size_x, image_size_y = 224, 224
 encode = {'notumor': 0, 'meningioma': 1, 'glioma': 2, 'pituitary': 3}
 decode = {0: 'notumor', 1: 'meningioma', 2: 'glioma', 3: 'pituitary'}
-train_dataset = 'backend/model/dataset/training/' 
-test_dataset = 'backend/model/dataset/testing/'
 
 def preprocess_image(img_path):
     # read in the image
@@ -57,23 +56,29 @@ def load_data(dataset_path):
     
     return x_data, y_data
 
+def predict_image(model, img):
+    img = np.expand_dims(img, axis=0)
+    prediction = model.predict(img)
+    return decode[np.argmax(prediction)]
+
+train_dataset = 'backend/model/dataset/training/' 
+test_dataset = 'backend/model/dataset/testing/'
+
 x_train, y_train = load_data(train_dataset)
 x_test, y_test = load_data(test_dataset)
 
 y_train = tf.keras.utils.to_categorical(y_train, num_classes=4)
 y_test = tf.keras.utils.to_categorical(y_test, num_classes=4)
 
-efficient_net = tf.keras.applications.EfficientNetB0(weights='imagenet', include_top=False, input_shape=(image_size_x, image_size_y, 3))
+model_path = 'backend/model/model.keras'
+model = tf.keras.models.load_model(model_path)
 
-model = tf.keras.models.Sequential([
-    efficient_net,
-    tf.keras.layers.GlobalAveragePooling2D(),
-    tf.keras.layers.Dropout(0.5),
-    tf.keras.layers.Dense(4, activation='softmax') 
-])
-
-model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
-
-history = model.fit(x_train, y_train, epochs=2, batch_size=32, validation_data=(x_test, y_test))
-
-model.save('model.keras')
+fig, axes = plt.subplots(4, 5, figsize=(15, 10))
+axes = axes.ravel()
+for i in range(0, 20):
+    index = random.randint(0, len(x_test))
+    axes[i].imshow(x_test[index], cmap='gray')
+    axes[i].set_title(f'Actual: {decode[np.argmax(y_test[index])]} \n Predicted: {predict_image(model, x_test[index])}')
+    axes[i].axis('off')
+plt.subplots_adjust(hspace=0.5)
+plt.show()
