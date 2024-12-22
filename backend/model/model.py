@@ -3,8 +3,8 @@
 import tensorflow as tf, numpy as np, cv2, os
 from sklearn.utils import shuffle
 
-train_dataset = 'dataset/training/' 
-test_dataset = 'dataset/testing/'
+train_dataset = 'backend/model/dataset/training/' 
+test_dataset = 'backend/model/dataset/testing/'
 
 encode = {'notumor': 0, 'meningioma': 1, 'glioma': 2, 'pituitary': 3}
 decode = {0: 'notumor', 1: 'meningioma', 2: 'glioma', 3: 'pituitary'}
@@ -76,5 +76,5 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(4, activation='softmax') 
 ])
 
-model.compile(optimizer=tf.optimizers.legacy.Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
-model.save('model.h5')
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
+model.save('model.keras')
