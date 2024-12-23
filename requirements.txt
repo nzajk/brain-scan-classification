@@ -1,0 +1,8 @@
+Flask
+Flask-Cors
+requests
+gunicorn
+numpy
+scikit-learn
+opencv-python
+matplotlib
