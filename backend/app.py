@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from backend.routes import main
+from routes import main
 import tensorflow as tf
 
 def create_app():
