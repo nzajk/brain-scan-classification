@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Scan Classification</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>Brain Scan Classification</h1>
+      <p>MRI &amp; CT automated analysis</p>
+    </div>
+    <div class="status-dot">Model ready</div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="imageInput" accept="image/*">
+        <div class="upload-placeholder" id="uploadPlaceholder">
+          <div class="upload-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 16 12 12 8 16"/>
+              <line x1="12" y1="12" x2="12" y2="21"/>
+              <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+            </svg>
+          </div>
+          <p><strong>Click to upload</strong> or drag and drop your scan</p>
+          <p class="formats">PNG · JPG · DICOM · up to 20MB</p>
+        </div>
+        <img id="previewImage" alt="Scan preview">
+      </div>
+
+      <div class="file-info" id="fileInfo">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <span class="file-info-name" id="fileInfoName"></span>
+        <button class="file-info-clear" id="clearBtn" title="Remove">✕</button>
+      </div>
+
+      <div class="error" id="errorMsg">Please select a scan image before classifying.</div>
+
+      <hr class="divider">
+
+      <button id="submitBtn" disabled>
+        <div class="spinner" id="spinner"></div>
+        <span id="btnText">Select a scan to begin</span>
+      </button>
+
+      <div id="result">
+        <div class="result-panel">
+          <div class="result-top">
+            <div class="result-indicator" id="resultIndicator"></div>
+            <div class="result-text-wrap">
+              <div class="result-label">Classification</div>
+              <div class="result-title" id="resultTitle"></div>
+              <div class="result-note" id="resultNote"></div>
+            </div>
+          </div>
+          <div class="result-stats">
+            <div class="stat">
+              <div class="stat-label">Confidence</div>
+              <div class="stat-value" id="confValue">—</div>
+              <div class="stat-bar"><div class="stat-bar-fill" id="confFill"></div></div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Analysis time</div>
+              <div class="stat-value" id="timeValue">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <span>For research use only — not a clinical diagnostic tool</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
