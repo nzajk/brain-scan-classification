@@ -29,13 +29,12 @@ def predict():
     # predict using the model
     model = current_app.config['MODEL']
     prediction = model.predict(np.expand_dims(img, axis=0))
-
     # get predicted class
     predicted_class = np.argmax(prediction, axis=1)
 
     decode = {0: 'No tumor', 1: 'Meningioma tumor', 2: 'Glioma tumor', 3: 'Pituitary tumor'}
 
-    return jsonify({'prediction': str(decode[predicted_class[0]])})
+    return jsonify({'confidence_score': str(np.max(prediction[0])), 'prediction': str(decode[predicted_class[0]])})
 
 # helper function to check allowed file extensions
 def allowed_file(filename):

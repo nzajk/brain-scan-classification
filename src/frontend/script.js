@@ -49,10 +49,8 @@ function clearFile() {
   errorMsg.style.display = 'none';
 }
 
-function showResult(prediction, elapsed) {
-  const isNormal = prediction.toLowerCase().includes('normal') ||
-                   prediction.toLowerCase().includes('no tumor') ||
-                   prediction.toLowerCase().includes('negative');
+function showResult(prediction, confidence_score, elapsed) {
+  const isNormal = prediction.toLowerCase().includes('no tumor');
 
   result.style.display = 'block';
   resultIndicator.className = 'result-indicator ' + (isNormal ? 'normal' : 'abnormal');
@@ -62,9 +60,10 @@ function showResult(prediction, elapsed) {
     : 'Potential irregularity found — consult a specialist.';
   timeValue.textContent = elapsed;
 
-  // Confidence not returned by backend — hide that stat
-  confValue.textContent = '—';
-  confFill.style.width = '0%';
+  const confidence = Math.max(0, Math.round(parseFloat(confidence_score) * 100));
+
+  confValue.textContent = `${confidence}%`;
+  confFill.style.width = `${confidence}%`;
 }
 
 function showError(message) {
@@ -113,7 +112,7 @@ submitBtn.addEventListener('click', async () => {
 
     if (response.ok) {
       const data = await response.json();
-      showResult(data.prediction, elapsed);
+      showResult(data.prediction, data.confidence_score, elapsed);
     } else {
       showError('Could not classify the image. Server returned an error.');
     }
